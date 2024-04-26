@@ -1,0 +1,100 @@
+<div class="vh-100 d-flex justify-content-center p-5 dafault-pointer"
+    [class.bg-light] = "!darkMode"
+    [class.bg-dark] = "darkMode">
+    <div class="d-flex flex-column">
+        <div 
+            class="d-flex flex-column rounded-4 px-5 pt-4 pb-3 shadow w-100"
+            [class.bg-dark-secondary] = "darkMode"
+            [class.bg-white] = "!darkMode">
+            <div class="d-flex">
+                <div class="me-auto">
+                    <p 
+                    class="fw-normal theme"
+                    [class.dark-theme] = "darkMode"
+                    (click)="changeMode()">
+                        <i *ngIf="!darkMode" class="bi bi-moon text-dark-gray fw-bold fs-5"></i>
+                        <i *ngIf="darkMode" class="bi bi-sun text-dark-gray fs-5"></i>
+                    </p>
+                </div>
+                <div class="ms-auto">
+                    <p 
+                        class="fw-normal logout"
+                        [class.dark-logout]="darkMode"
+                        (click)="logout()">Logout
+                        <i class="ms-1 bi bi-box-arrow-right fw-normal"></i>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <div 
+                class="d-flex align-items-center justify-content-center circle shadow mb-3"
+                [class.text-dark-secondary] = "darkMode">
+                    <i class="bi bi-person-circle fs-1"></i>
+                </div>
+                <p class="text-primary fs-5" [class.text-dark-primary] = "darkMode"> {{player?.playerID}} </p>
+            </div>
+            <div
+                class="mt-4 d-flex flex-column align-items-center align-items-md-start flex-md-row justify-content-evenly text-gray"
+                [class.text-dark-gray] = "darkMode">
+                
+                <p> <i class="bi bi-ui-radios-grid me-2"></i> {{player?.playerScore}} Points </p>
+                <i class="bi bi-dot mx-2"></i>
+                <p> <i class="bi bi-people me-2"></i> {{playerFriends}} Friends </p>
+                <i class="bi bi-dot mx-2"></i>
+                <p><i class="bi bi-controller me-2"></i> {{playerPlayTime}} Games Played </p>
+            </div>
+
+        </div>
+        <div class="mt-4 d-flex flex-column rounded-4 px-5 pt-3 pb-3 shadow w-100" 
+            [class.bg-dark-secondary] = "darkMode"
+            [class.bg-white] = "!darkMode">
+            <div class="d-flex justify-content-between">
+                <p [class.text-dark-primary] = "darkMode"><strong>Leaderboard</strong></p>
+                <p class="text-gray" [class.text-dark-gray] = "darkMode">All Time</p>
+            </div>
+
+            <div class="d-flex flex-column leaderboard" >
+                <div *ngFor="let player of leaderboard; index as i"
+                    class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center" 
+                        [class.text-dark-primary] = "darkMode && i < 3"
+                        [class.text-gray]="i >= 3 && !darkMode"
+                        [class.text-dark-gray] ="i >= 3 && darkMode">
+                        {{i + 1}} <i class="bi bi-person-circle fs-5 ms-3 me-2"></i>
+                        <p class="my-auto"> {{player.playerID}} </p>
+                    </div>
+                    <p class="my-auto" 
+                        [class.text-dark-primary] = "darkMode && i < 3"
+                        [class.text-dark-gray] ="darkMode && i >= 3"> <strong> {{player.playerScore}} </strong> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="d-flex flex-column justify-content-between bg-white rounded-4 px-5 pt-4 pb-3 shadow w-50 ms-5 text-center"
+        [class.bg-dark-secondary] = "darkMode">
+        <div>
+            <i class="fa-solid fa-brain fs-1 text-ternary mb-4"
+                [class.text-dark-ternary] = "darkMode"></i>
+
+            <div (click)="matchRequest($event)" class="d-flex flex-column align-items-center">
+                <button class="btn btn-primary btn-md m-3 text-white shadow w-25 startMatch" id="Decrypter"> Start
+                    Codebreaker </button>
+                <button class="btn btn-primary btn-md mb-3 text-white shadow w-25 startMatch" id="Crypter"> Start
+                    Codemaker </button>
+                <button class="btn btn-secondary text-white btn-md shadow w-25"
+                    [class.restartMatch] = "!noMatchRetrived"
+                    [disabled]="noMatchRetrived">
+                    Resume Match </button>
+            </div>
+        </div>
+        
+
+
+        <app-instruction [darkMode]="darkMode"></app-instruction>
+
+        <div *ngIf="error" class="alert alert-danger mt-4 rounded-4 shadow">
+            Error During the loading of the Match, Retry Later
+        </div>
+    </div>
+</div>

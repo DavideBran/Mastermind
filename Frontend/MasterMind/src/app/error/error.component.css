@@ -1,0 +1,9 @@
+img{
+    width: 80vh;
+}
+
+.logo:hover{
+    opacity: 92%;
+    scale: 1.07;
+    transition: all 0.3s ease-out;
+}

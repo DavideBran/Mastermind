@@ -1,0 +1,132 @@
+/* .game {
+    display: flex;
+    align-items: center;
+} */
+
+.response {
+    border: 0.01rem solid black;
+    background-color: #F5EBE0;
+}
+
+.color-container>.color {
+    border: none;
+}
+
+.selected {
+    scale: 1.3;
+    z-index: 2;
+}
+
+.color-container>.selected.color {
+    scale: 1.2;
+    border: 2px solid #4CC9F0;
+    box-shadow: 0 0 9px #4CC9F0;
+}
+
+.transition {
+    transition: all 0.2s ease-in-out;
+}
+
+.color {
+    border-radius: 100%;
+    border: 0.01rem solid black;
+    width: 35px;
+    height: 35px;
+}
+
+.margin {
+    margin-right: 10%;
+}
+
+.logo:hover {
+    opacity: 92%;
+    scale: 1.07;
+    transition: all 0.3s ease-out;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.response {
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+}
+
+.response.b {
+    background-color: #1E1C1C !important;
+}
+
+.response.r {
+    background-color: #D58936 !important;
+}
+
+.red {
+    background-color: #D7263D;
+}
+
+.blue {
+    background-color: #075993;
+}
+
+.gray {
+    background-color: gray;
+}
+
+.pink {
+    background-color: #FFA9E7;
+}
+
+.orange {
+    background-color: #F09D51;
+}
+
+.green {
+    background-color: green;
+}
+
+.purple {
+    background-color: #593C8F;
+}
+
+.white {
+    background-color: #ECDCC9;
+}
+
+
+
+.send-move-btn {
+    padding: 0;
+}
+
+
+.winning {
+    z-index: 4;
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(5px);
+}
+
+.screen-background {
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 3;
+    background-color: black;
+    opacity: 70%;
+}
+
+.theme{
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.theme:hover{
+    scale: 1.15;
+}

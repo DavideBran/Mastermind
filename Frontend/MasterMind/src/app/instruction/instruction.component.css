@@ -1,0 +1,32 @@
+.pointer {
+    cursor: pointer;
+}
+
+.pointer:hover {
+    color: #D7263D;
+    transition: 0.3s ease-in-out;
+}
+
+.screen-background {
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    background-color: black;
+    opacity: 70%;
+}
+
+.instruction-zoom {
+    z-index: 2;
+}
+
+.instruction {
+    font-size: small;
+}
+
+.instruction,
+strong {
+    cursor: default;
+}

@@ -1,0 +1,155 @@
+@if (winnedMatch) {
+<div class="screen-background">
+</div>
+<div class="winning d-flex align-items-center">
+    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+        <h1 class="text-light"> {{matchEndMessage}} </h1>
+        <div class="d-flex">
+            <button href="#" class="btn" [class.btn-success]="won" [class.btn-danger]="!won" (click)="navigateToHome()">
+                <i class="bi bi-house"></i> Home
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+<div *ngIf="invalidResponse" class="screen-background">
+</div>
+<div *ngIf="invalidResponse" class="winning d-flex flex-column align-items-center justify-content-center">
+    <i class="bi bi-x-circle-fill fs-2 text-dark pointer" (click)="invalidResponseInserted()"></i>
+    <div class="d-flex flex-column align-items-center justify-content-center shadow bg-ternary shadow p-4 rounded-4">
+        <h3 class="text-light text-center"> Invalid Response Inserted! <br> Ensure to insert the correct Value </h3>
+    </div>
+</div>
+
+<div class="d-flex flex-column w-100 vh-100" [class.bg-dark]="darkMode">
+
+    <div class="d-flex justify-content-center pt-2">
+        <a (click)="navigateToHome()" class="m-auto">
+            <i class="fa-solid fa-brain fs-3 text-ternary logo"></i>
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-center w-100">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <h3 class="title text-center mb-3" [class.text-success]="playerRole == 'Crypter'"
+                [class.text-dark-ternary]="playerRole == 'Crypter' && darkMode"
+                [class.text-secondary]="playerRole == 'Decrypter'"
+                [class.text-dark-primary]="playerRole == 'Decrypter' && darkMode">
+
+                {{playerRole?.toLowerCase() == "crypter" ? "Codemaker" : "Codebreaker"}}
+            </h3>
+            <div *ngFor="let response of responses; index as i"
+                class="d-flex justify-content-center align-items-center border border-3 border-dark rounded-4 shadow mb-3 transition"
+                [class.selected]="allSequences[i]" [class.bg-dark-secondary]="darkMode">
+
+                <div class="response-container d-flex flex-column mx-3">
+                    <div class="first-row d-flex flex-row mb-1">
+                        <!-- Responses Div -->
+                        @for (value of response?.slice(0,2); track $index) {
+                        <div class="response me-1"
+                            [class.bg-dark-primary]="darkMode && playerRole?.toLocaleLowerCase() == 'decrypter'"
+                            [class.pointer]="playerRole?.toLowerCase() == 'crypter' && i == turns"
+                            [class.bg-dark-ternary]="darkMode && playerRole?.toLocaleLowerCase() == 'crypter'"
+                            [class.border-0]="darkMode" [class.b]="value == 'b'" [class.r]="value == 'r'"
+                            (click)="setResponse(i, $index)">
+                        </div>
+                        }
+                    </div>
+                    <div class="second-row flex-row d-flex">
+                        @for (value of response?.slice(2,4); track $index) {
+                        <div class="response me-1"
+                            [class.bg-dark-primary]="darkMode && playerRole?.toLocaleLowerCase() == 'decrypter'"
+                            [class.pointer]="playerRole?.toLowerCase() == 'crypter' && i == turns"
+                            [class.bg-dark-ternary]="darkMode && playerRole?.toLocaleLowerCase() == 'crypter'"
+                            [class.border-0]="darkMode" [class.b]="value == 'b'" [class.r]="value == 'r'"
+                            (click)="setResponse(i, $index + 2)">
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="sequence d-flex align-items-start border-start border-3 border-dark">
+                    <!-- Sequences Div -->
+                    <div *ngFor="let symbol of sequences[i]; index as j" [class.me-3]="j == 3"
+                        (click)="insertColorSelected(sequenceColor, j)"
+                        [ngClass]="j == 0 ? 'color mt-1 ms-3' : 'color ms-3 my-1'" [class]="symbol"
+                        [class.pointer]="playerRole?.toLocaleLowerCase() == 'decrypter' && validateParent(sequenceColor)"
+                        #sequenceColor> </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="position-absolute top-50 end-0 translate-middle-y margin">
+            <div class="d-flex align-items-center justify-content-center flex-column">
+                <div class="ms-2">
+                    <p class="fw-normal theme" [class.dark-theme]="darkMode" (click)="changeMode()">
+                        <i *ngIf="!darkMode" class="bi bi-moon text-dark-gray fw-bold fs-5"></i>
+                        <i *ngIf="darkMode" class="bi bi-sun text-dark-gray fs-5"></i>
+                    </p>
+                </div>
+
+                <div *ngIf="playerRole?.toLowerCase() == 'decrypter'  else crypterSection"
+                    class="color-container d-flex flex-column align-itmes-start justify-content-center shadow rounded-4 p-2 bg-light-gray m5"
+                    [class.bg-dark-secondary]="darkMode">
+                    <div *ngFor="let symbol of avaibleColors; index as j" [class.me-3]="j == 3" (click)="selectColor(j)"
+                        [ngClass]="j == 0 ? 'color mt-1 ms-3 mb-2 transition pointer' : 'color ms-3 mb-2 transition pointer'"
+                        [class]="symbol" [class.selected]="allColors[j]">
+                    </div>
+                </div>
+
+                <div *ngIf="playerRole?.toLocaleLowerCase() == 'decrypter' || codifedSequenceSubmitted"
+                    class="send-move d-flex justify-content-center">
+                    <button class="send-move-btn btn btn-lg w-100 p-1 mt-3 text-nowrap" (click)="sendMove()"
+                        [class.btn-primary]="!darkMode"
+                        [class.btn-dark-primary]="darkMode && playerRole?.toLocaleLowerCase() == 'decrypter'"
+                        [class.btn-dark-ternary]="darkMode && playerRole?.toLocaleLowerCase() == 'crypter'"
+                        [disabled]="!validateColorsSelected() && playerRole?.toLocaleLowerCase() == 'decrypter'"> Move
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="differentColor" class=" position-absolute bottom-0 end-25 text-center transition" [class.text-dark] = "!darkMode" [class.text-dark-light] ="darkMode">
+            <p>Colors Must be different</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Crypter -->
+
+<ng-template #crypterSection>
+    <div class="d-flex">
+        <div class="d-flex flex-column align-items-center">
+            <div class="d-block">
+                <p class="fs-3 text-nowrap" [class.text-success]="!darkMode" [class.text-dark-ternary]="darkMode"> Code
+                </p>
+            </div>
+            <div class="color-container d-flex flex-column align-itmes-start justify-content-center shadow rounded-4 p-2 bg-light-gray"
+                [class.bg-light-gray]="!darkMode" [class.bg-dark-secondary]="darkMode">
+                <div *ngFor="let symbol of codifedSequence; index as i" [class.me-3]="i == 3"
+                    [ngClass]="i == 0 ? 'color mt-1 ms-3 mb-2 border border-2 border-dark': 'color ms-3 mb-2 border border-2 border-dark'"
+                    [class.pointer]="codifedSequence.includes('')" (click)="insertIntoCodify(i)"
+                    [class]="symbol == '' ? 'bg-light' : symbol " #codify>
+                </div>
+            </div>
+
+            @if(!codifedSequence.includes("") && !codifedSequenceSubmitted){
+            <div (click)="sendCodify()" class="send-move d-flex justify-content-center">
+                <button class="send-move-btn btn btn-lg p-1 px-4 mt-4" [class.btn-primary]="!darkMode"
+                    [class.btn-dark-ternary]="darkMode"> Send </button>
+            </div>
+            }
+
+        </div>
+        @if(codifedSequence.includes("") || !codifedSequenceSubmitted){
+        <div class="color-container d-flex flex-column align-itmes-start justify-content-center shadow rounded-4 p-2 bg-light-gray ms-4"
+            [class.bg-dark-secondary]="darkMode">
+            <div *ngFor="let symbol of avaibleColors; index as j" [class.me-3]="j == 3" (click)="selectColor(j)"
+                [ngClass]="j == 0 ? 'color mt-1 ms-3 mb-2 transition' : 'color ms-3 mb-2 transition'" [class]="symbol"
+                [class.selected]="allColors[j]">
+            </div>
+        </div>
+        }
+    </div>
+</ng-template>

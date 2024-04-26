@@ -1,0 +1,33 @@
+<div class="vh-100"></div>
+
+<div
+    class="container-fluid d-flex flex-column justify-content-center align-items-center position-fixed top-50 start-50 translate-middle">
+    <div class="col-lg-3 col-md-4 col-sm-4 rounded-5 px-5 py-3 shadow bg-white">
+        <div class="container-fluid text-center mb-4 text-dark">
+            <i class="fa-solid fa-brain fs-1 text-ternary"></i>
+        </div>
+        <form #f="ngForm" (ngSubmit)="onSumbit()">
+            <div class="form-floating mb-3">
+                <input type="email"
+                    class="form-control"
+                    [class.is-invalid] = "email.invalid && !email.pristine && email.touched"
+                    id="floatingInput" placeholder="email@email.com" name="email" [(ngModel)]="userEmail"
+                    #email="ngModel" required email>
+
+                <label for="floatingInput" class="text-dark">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                    name="password " [(ngModel)]="userPassword" required>
+                <label for="floatingPassword" class="text-dark">Password</label>
+            </div>
+
+            <div class="container-fluid d-flex flex-column justify-content-center align-items-center w-100">
+                <button type="submit" class="btn btn-primary text-white mt-4 w-100"
+                    [disabled]="f.touched && !f.valid">Login</button>
+            </div>
+
+        </form>
+        <div class="text-center text-danger mt-4" *ngIf="invalidCredential"> Invalid Credential Inserted</div>
+    </div>
+</div>

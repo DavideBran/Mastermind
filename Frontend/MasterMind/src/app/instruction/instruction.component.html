@@ -1,0 +1,56 @@
+<div class="text-start fw-medium" [class.text-gray]="!darkMode" [class.text-dark-gray]="darkMode">
+    <p>
+        <strong> Mastermind</strong>
+        <i class="bi bi-search fs-4 ms-3 pointer" (click)="viewInstruction = !viewInstruction"></i>
+    </p>
+
+    <p class="instruction">
+        Mastermind is a game where one player, the Codemaker, creates a secret code of four distinct symbols
+        from a set of eight possible colors: red, orange, grey, white, purple, green, pink, and blue. The other
+        player, the Codebreaker, has nine turns to guess the code.
+
+        The Codebreaker selects a sequence of four unique symbols, trying to match the hidden code. After each
+        guess, the Codemaker provides feedback in the form of colored pegs. A black peg indicates a correct
+        symbol in the correct position, while a orange peg signifies a correct symbol but in the wrong position.
+
+        The game continues with the Codebreaker using deduction and logic to refine their guesses based on the
+        feedback received. If the Codebreaker successfully deciphers the sequence within nine turns, they win.
+        However, if you're the Codemaker and the Codebreaker doesn't solve the code within six moves, you win.
+
+        Remember, no duplicate symbols are allowed in the Codebreaker's guesses, and the key to winning is using
+        strategy and deduction to crack the hidden code within the given number of attempts!
+    </p>
+</div>
+
+@if(viewInstruction){
+<div class="screen-background">
+</div>
+<div class="d-flex align-items-center position-absolute top-50 start-50 translate-middle instruction-zoom">
+    <div class="text-start fw-bold p-5 pt-2 rounded-4 shadow" [class.bg-dark-secondary]="darkMode"
+        [class.text-dark-gray]="darkMode" [class.bg-white]="!darkMode" [class.text-gray]="!darkMode">
+        <div class="text-end">
+            <i class="bi bi-x-circle fs-2 pointer" (click)="viewInstruction = !viewInstruction"></i>
+        </div>
+
+        <p class="fw-semibold">
+            <strong> Mastermind</strong>
+        </p>
+        <p class="fw-semibold">
+            Mastermind is a game where one player, the Codemaker, creates a secret code of four distinct symbols
+            from a set of eight possible colors: red, orange, grey, white, purple, green, pink, and blue. The other
+            player, the Codebreaker, has nine turns to guess the code.
+
+            The Codebreaker selects a sequence of four unique symbols, trying to match the hidden code. After each
+            guess, the Codemaker provides feedback in the form of colored pegs. A black peg indicates a correct
+            symbol in the correct position, while a orange peg signifies a correct symbol but in the wrong position.
+
+            The game continues with the Codebreaker using deduction and logic to refine their guesses based on the
+            feedback received. If the Codebreaker successfully deciphers the sequence within nine turns, they win.
+            However, if you're the Codemaker and the Codebreaker doesn't solve the code within six moves, you win.
+
+            Remember, no duplicate symbols are allowed in the Codebreaker's guesses, and the key to winning is using
+            strategy and deduction to crack the hidden code within the given number of attempts!
+        </p>
+    </div>
+</div>
+}
